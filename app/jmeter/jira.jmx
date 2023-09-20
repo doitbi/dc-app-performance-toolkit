@@ -9143,7 +9143,7 @@ if ( sleep_time &gt; 0 ) {
               </JSR223PreProcessor>
               <hashTree/>
             </hashTree>
-            <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="login_as_specific_user" enabled="false"/>
+            <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="login_as_specific_user" enabled="true"/>
             <hashTree>
               <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="username:password" enabled="true">
                 <collectionProp name="Arguments.arguments">
@@ -9298,7 +9298,7 @@ response_data = slurper.parseText(prev.getResponseDataAsString())
 if (response_data.name != vars.get(&quot;app_specific_username&quot;)) {
 	prev.setSuccessful(false)
 	prev.setResponseMessage(&quot;Login Failed: Your app_specific_username: &apos;&quot; + vars.get(&quot;app_specific_username&quot;) + &quot;&apos; or password is incorrect. Also, check the CAPTCHA for &apos;&quot; + vars.get(&quot;app_specific_username&quot;) + &quot;&apos; user.&quot;)
-	prev.setTestLogicalAction(org.apache.jmeter.threads.JMeterContext.TestLogicalAction.BREAK_CURRENT_LOOP)     
+	prev.setTestLogicalAction(org.apache.jmeter.threads.JMeterContext.TestLogicalAction.BREAK_CURRENT_LOOP)
 } else {
 	prev.setIgnore()
 }
@@ -9312,7 +9312,114 @@ if (response_data.name != vars.get(&quot;app_specific_username&quot;)) {
               <boolProp name="TransactionController.parent">true</boolProp>
             </TransactionController>
             <hashTree>
-              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /app/get_endpoing" enabled="true">
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /rest/best-bi/1.0/feeds" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">{&#xd;
+   &quot;name&quot;:&quot;test&quot;,&#xd;
+   &quot;description&quot;:&quot;&quot;,&#xd;
+   &quot;feedType&quot;:&quot;POWERBI&quot;,&#xd;
+   &quot;jql&quot;:&quot;&quot;,&#xd;
+   &quot;historyFieldsFilter&quot;:[&#xd;
+      &#xd;
+   ],&#xd;
+   &quot;historyNewValuesFilter&quot;:[&#xd;
+      &#xd;
+   ],&#xd;
+   &quot;historyOldValuesFilter&quot;:[&#xd;
+      &#xd;
+   ],&#xd;
+   &quot;historyStatusesFilter&quot;:[&#xd;
+      &#xd;
+   ],&#xd;
+   &quot;historyOldStatusesFilter&quot;:[&#xd;
+      &#xd;
+   ],&#xd;
+   &quot;historyNewAssigneeFilter&quot;:[&#xd;
+      &#xd;
+   ],&#xd;
+   &quot;historyOldAssigneeFilter&quot;:[&#xd;
+      &#xd;
+   ],&#xd;
+   &quot;enableProjectFilter&quot;:true,&#xd;
+   &quot;insightIql&quot;:&quot;&quot;,&#xd;
+   &quot;start&quot;:null,&#xd;
+   &quot;end&quot;:null,&#xd;
+   &quot;filter&quot;:0,&#xd;
+   &quot;items&quot;:[&#xd;
+      {&#xd;
+         &quot;table&quot;:&quot;Issues&quot;,&#xd;
+         &quot;fields&quot;:[&#xd;
+            &quot;Key&quot;,&#xd;
+            &quot;Issue_Type_Id&quot;,&#xd;
+            &quot;Issue_Type_Name&quot;,&#xd;
+            &quot;Watchers&quot;,&#xd;
+            &quot;Resolved&quot;,&#xd;
+            &quot;Priority_Id&quot;,&#xd;
+            &quot;Priority_Name&quot;,&#xd;
+            &quot;Updated&quot;,&#xd;
+            &quot;Created&quot;,&#xd;
+            &quot;Due_Date&quot;,&#xd;
+            &quot;Last_Viewed&quot;,&#xd;
+            &quot;Environment&quot;,&#xd;
+            &quot;Resolution_Id&quot;,&#xd;
+            &quot;Resolution_Name&quot;,&#xd;
+            &quot;Description&quot;,&#xd;
+            &quot;Security_Level&quot;,&#xd;
+            &quot;Work_Ratio&quot;,&#xd;
+            &quot;Votes&quot;,&#xd;
+            &quot;Summary&quot;,&#xd;
+            &quot;Status_Id&quot;,&#xd;
+            &quot;Status_Name&quot;,&#xd;
+            &quot;Status_Category_Name&quot;,&#xd;
+            &quot;Assignee_Key&quot;,&#xd;
+            &quot;Assignee_Name&quot;,&#xd;
+            &quot;Creator_Key&quot;,&#xd;
+            &quot;Creator_Name&quot;,&#xd;
+            &quot;Reporter_Key&quot;,&#xd;
+            &quot;Reporter_Name&quot;,&#xd;
+            &quot;Project_Id&quot;,&#xd;
+            &quot;Project_Key&quot;,&#xd;
+            &quot;Project_Name&quot;,&#xd;
+            &quot;Status_Changed_Date&quot;,&#xd;
+            &quot;Is_Subtask&quot;,&#xd;
+            &quot;Number_Of_Subtasks&quot;&#xd;
+         ]&#xd;
+      }&#xd;
+   ]&#xd;
+}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                <stringProp name="HTTPSampler.path">${application.postfix}/rest/best-bi/1.0/feeds</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree/>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /rest/best-bi/1.0/feeds" enabled="true">
                 <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
                   <collectionProp name="Arguments.arguments"/>
                 </elementProp>
@@ -9320,7 +9427,7 @@ if (response_data.name != vars.get(&quot;app_specific_username&quot;)) {
                 <stringProp name="HTTPSampler.port"></stringProp>
                 <stringProp name="HTTPSampler.protocol"></stringProp>
                 <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-                <stringProp name="HTTPSampler.path">${application.postfix}/app/get_endpoint</stringProp>
+                <stringProp name="HTTPSampler.path">${application.postfix}/rest/best-bi/1.0/feeds?page=0&amp;type=powerbi&amp;sort=DESC&amp;filterType=all</stringProp>
                 <stringProp name="HTTPSampler.method">GET</stringProp>
                 <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
                 <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -9331,60 +9438,23 @@ if (response_data.name != vars.get(&quot;app_specific_username&quot;)) {
                 <stringProp name="HTTPSampler.response_timeout"></stringProp>
               </HTTPSamplerProxy>
               <hashTree>
-                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="app_id" enabled="true">
-                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-                  <stringProp name="RegexExtractor.refname">app_id</stringProp>
-                  <stringProp name="RegexExtractor.regex">&quot;id&quot;:&quot;(.+?)&quot;</stringProp>
-                  <stringProp name="RegexExtractor.template">$1$</stringProp>
-                  <stringProp name="RegexExtractor.default">NOT FOUND</stringProp>
-                  <stringProp name="RegexExtractor.match_number">1</stringProp>
-                </RegexExtractor>
-                <hashTree/>
-                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="app_token" enabled="true">
-                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-                  <stringProp name="RegexExtractor.refname">app_token</stringProp>
-                  <stringProp name="RegexExtractor.regex">&quot;token&quot;:&quot;(.+?)&quot;</stringProp>
-                  <stringProp name="RegexExtractor.template">$1$</stringProp>
-                  <stringProp name="RegexExtractor.default">NOT FOUND</stringProp>
-                  <stringProp name="RegexExtractor.match_number">1</stringProp>
-                </RegexExtractor>
-                <hashTree/>
-                <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="assertion after GET request" enabled="true">
-                  <collectionProp name="Asserion.test_strings">
-                    <stringProp name="261585815">asserttion string</stringProp>
-                  </collectionProp>
-                  <stringProp name="Assertion.custom_message"></stringProp>
-                  <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-                  <boolProp name="Assertion.assume_success">false</boolProp>
-                  <intProp name="Assertion.test_type">16</intProp>
-                </ResponseAssertion>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="feed_hash" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">feed_hash</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$[0].hash</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                </JSONPostProcessor>
                 <hashTree/>
               </hashTree>
-              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /app/post_endpoing" enabled="true">
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /rest/best-bi/1.0/power/export/${feed_hash}" enabled="true">
                 <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-                  <collectionProp name="Arguments.arguments">
-                    <elementProp name="id" elementType="HTTPArgument">
-                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                      <stringProp name="Argument.value">${app_id}</stringProp>
-                      <stringProp name="Argument.metadata">=</stringProp>
-                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                      <stringProp name="Argument.name">id</stringProp>
-                    </elementProp>
-                    <elementProp name="token" elementType="HTTPArgument">
-                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                      <stringProp name="Argument.value">${app_token}</stringProp>
-                      <stringProp name="Argument.metadata">=</stringProp>
-                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                      <stringProp name="Argument.name">token</stringProp>
-                    </elementProp>
-                  </collectionProp>
+                  <collectionProp name="Arguments.arguments"/>
                 </elementProp>
                 <stringProp name="HTTPSampler.domain"></stringProp>
                 <stringProp name="HTTPSampler.port"></stringProp>
                 <stringProp name="HTTPSampler.protocol"></stringProp>
                 <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-                <stringProp name="HTTPSampler.path">${application.postfix}/app/post_endpoint</stringProp>
-                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <stringProp name="HTTPSampler.path">${application.postfix}/rest/best-bi/1.0/power/export/${feed_hash}</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
                 <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
                 <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
                 <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -9393,18 +9463,7 @@ if (response_data.name != vars.get(&quot;app_specific_username&quot;)) {
                 <stringProp name="HTTPSampler.connect_timeout"></stringProp>
                 <stringProp name="HTTPSampler.response_timeout"></stringProp>
               </HTTPSamplerProxy>
-              <hashTree>
-                <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="assertion after POST request" enabled="true">
-                  <collectionProp name="Asserion.test_strings">
-                    <stringProp name="-787535121">assertion string</stringProp>
-                  </collectionProp>
-                  <stringProp name="Assertion.custom_message"></stringProp>
-                  <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-                  <boolProp name="Assertion.assume_success">false</boolProp>
-                  <intProp name="Assertion.test_type">16</intProp>
-                </ResponseAssertion>
-                <hashTree/>
-              </hashTree>
+              <hashTree/>
             </hashTree>
             <IfController guiclass="IfControllerPanel" testclass="IfController" testname="login_as_default_user_if_specific_user_was_loggedin " enabled="true">
               <stringProp name="IfController.condition">${run_as_specific_user}</stringProp>
@@ -9549,7 +9608,7 @@ response_data = slurper.parseText(prev.getResponseDataAsString())
 if (response_data.name != vars.get(&quot;username&quot;)) {
 	prev.setSuccessful(false)
 	prev.setResponseMessage(&quot;Re-login Failed: username: &apos;&quot; + vars.get(&quot;username&quot;) + &quot;&apos; failed to login. Check the CAPTCHA for &apos;&quot; + vars.get(&quot;username&quot;) + &quot;&apos; user.&quot;)
-	prev.setTestLogicalAction(org.apache.jmeter.threads.JMeterContext.TestLogicalAction.BREAK_CURRENT_LOOP)                        
+	prev.setTestLogicalAction(org.apache.jmeter.threads.JMeterContext.TestLogicalAction.BREAK_CURRENT_LOOP)
 } else {
 	prev.setIgnore()
 }
